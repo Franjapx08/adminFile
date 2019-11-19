@@ -1,0 +1,9 @@
+* {
+  margin: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.table th {
+  font-size: 13px;
+  color: rgb(83, 83, 83);
+}
