@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World!</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' 'unsafe-inline';"
+    />
+  </head>
+
+  <body>
+    <div>
+      <div class="header">
+        <div class="arrows">
+          <button>
+            <i
+              class="fa fa-arrow-left"
+              style="font-size: 30px;"
+              aria-hidden="true"
+            ></i>
+          </button>
+          <button>
+            <i
+              class="fa fa-arrow-right"
+              style="font-size: 30px;"
+              aria-hidden="true"
+            ></i>
+          </button>
+          <button>
+            <i
+              class="fa fa-arrow-up"
+              style="font-size: 30px;"
+              aria-hidden="true"
+            ></i>
+          </button>
+        </div>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Icon</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Eliminar</th>
+            <th scope="col">Modificar</th>
+            <th scope="col">Copiar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="e, cont in datos" @dblclick="abrir(e.nombre, e.tipo)">
+            <th v-if="e.tipo == 'carpeta'">
+              <i
+                class="fa fa-folder"
+                aria-hidden="true"
+                style="font-size: 40px; margin-right:5px; color: #4fee69e7"
+              ></i>
+            </th>
+            <th v-else>
+              <i
+                class="fa fa-file"
+                aria-hidden="true"
+                style="margin-right:5px; color: #a6a7a1e7; font-size: 40px"
+              ></i>
+            </th>
+            <th>{{ e.nombre }}</th>
+            <th>{{ e.tipo }}</th>
+            <th>
+              <a
+                @click="eliminar(e.nombre, e.tipo)"
+                style=" color: #aa1616e7; font-size: 20px"
+                class="nav-item nav-link"
+              >
+                <i class="fa fa-minus-circle"></i
+              ></a>
+            </th>
+            <th>
+              <a
+                @click="modificar(e.nombre, text)"
+                style=" color: #63ca30e7; font-size: 20px"
+                class="nav-item nav-link"
+              >
+                <i class="fa fa-edit"></i
+              ></a>
+              <input type="text" v-if="mostrar" v-model="text" />
+              <input disabled type="text" v-else v-model="text" />
+            </th>
+            <th>
+              <a v-if="e.tipo == 'carpeta'" @click="copiarCarpeta(e.nombre)"
+                ><i class="fa fa-copy"></i
+              ></a>
+              <a v-else @click="copiarArch(e.nombre)"
+                ><i class="fa fa-copy"></i
+              ></a>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
