@@ -48,6 +48,7 @@ var App = new Vue({
   watch: {
     //funciones que cambian en tiempo real
     ruta() {
+      this.mensajeSearch = ""; // inicializar mensaje
       //variblae globar que camvbia en tiempo real cuando es utilizada
       this.datos = []; //inicializa arreglo datos
       fs.readdirSync(this.ruta.join("/")).forEach((e, i) => {
@@ -69,6 +70,7 @@ var App = new Vue({
   },
   methods: {
     buscar() {
+      this.mensajeSearch = ""; //inicializar mensaje
       //funcion para buscar en campo busqueda
       var encontraro = false; //variable para identificar si fue encontrado o no
       if (this.formBusqueda != null) {
@@ -95,7 +97,8 @@ var App = new Vue({
           }
         }
         if (!encontraro) {
-          alert("Error! \n" + "No se encontraron resultados");
+          /* alert("Error! \n" + "No se encontraron resultados"); */
+          this.mensajeSearch = "No resultados";
         }
       }
     },
@@ -145,7 +148,8 @@ var App = new Vue({
             this.formCarpeta = null;
           } else {
             //si hay error
-            alert("Error! \n" + "Error");
+            document.getElementById("id01").style.display = "none";
+            /* alert("Error! \n" + "Error"); */
           }
         });
       } else {
@@ -213,7 +217,7 @@ var App = new Vue({
         } else {
           //eliminar tipo archivo
           try {
-            fs.unrutaSync(this.ruta.join("/") + "/" + nombre); //funcion para eliminar archivos
+            fs.unlinkSync(this.ruta.join("/") + "/" + nombre); //funcion para eliminar archivos
             this.recargar(); //recarga pagina
             document.getElementById("id03").style.display = "none";
           } catch (err) {
