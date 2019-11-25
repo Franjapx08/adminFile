@@ -10,31 +10,143 @@
     /> -->
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/estilos.css" />
+    <link rel="stylesheet" href="css/modal.css" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
     <script src="js/vue.js"></script>
     <script src="js/utils.js"></script>
   </head>
 
   <body>
     <div id="app">
+      <!-- modal carpeta -->
+      <div class="w3-container">
+        <div id="id01" class="w3-modal">
+          <div class="w3-modal-content" style="width: 300px;">
+            <div class="w3-container">
+              <h3>Nuevo directorio</h3>
+              <form>
+                <div class="form-group">
+                  <span style="color:red;">{{mensaje}}</span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="formCarpeta"
+                    placeholder="Nombre"
+                  />
+                </div>
+                <button
+                  @click="nuevaCarpeta()"
+                  type="button"
+                  class="btn btn-success"
+                >
+                  Aceptar
+                </button>
+                <button type="button" class="btn btn-danger" @click="cancelar">
+                  Cancelar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- modal archivo-->
+      <div class="w3-container">
+        <div id="id02" class="w3-modal">
+          <div class="w3-modal-content" style="width: 300px;">
+            <div class="w3-container">
+              <h3>Nuevo archivo</h3>
+              <form>
+                <div class="form-group">
+                  <span style="color:red;">{{mensaje}}</span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="formArchivo"
+                    placeholder="Nombre"
+                  />
+                </div>
+                <button
+                  @click="nuevoArchivo()"
+                  type="button"
+                  class="btn btn-success"
+                >
+                  Aceptar
+                </button>
+                <button type="button" class="btn btn-danger" @click="cancelar">
+                  Cancelar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- modal opciones-->
+      <div class="w3-container">
+        <div id="id03" class="w3-modal">
+          <div class="w3-modal-content" style="width: 300px;">
+            <div class="w3-container">
+              <span @click="cancelar" class="w3-button w3-display-topright"
+                >&times;</span
+              >
+              <h3>Opciones</h3>
+              <form>
+                <div class="form-group">
+                  <span style="color:red;">{{mensaje}}</span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="formCambiarNombre"
+                    placeholder="Cambiar nombre"
+                  />
+                  <button
+                    type="button"
+                    style="margin-top: 5px; width: 100%;"
+                    class="btn btn-success"
+                    @click="cambiarNombre()"
+                  >
+                    Cambiar nombre
+                  </button>
+                  <button
+                    type="button"
+                    style="margin-top: 5px; width: 100%;"
+                    class="btn btn-danger"
+                    @click="eliminar()"
+                  >
+                    Eliminar
+                  </button>
+                  <button
+                    type="button"
+                    style="margin-top: 5px; width: 100%;"
+                    class="btn btn-info"
+                    @click="copiar()"
+                  >
+                    Copiar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       <div style="background: #bebebe">
         <div class="header">
           <div class="arrows">
-            <button>
+            <button @click="backPage()">
               <i
                 class="fa fa-arrow-left"
                 style="font-size: 15px;"
                 aria-hidden="true"
               ></i>
             </button>
-            <button>
+            <!--  <button @click="adelante()">
               <i
                 class="fa fa-arrow-right"
                 style="font-size: 15px;"
                 aria-hidden="true"
               ></i>
-            </button>
-            <button>
+            </button> -->
+            <button @click="up()">
               <i
                 class="fa fa-arrow-up"
                 style="font-size: 15px;"
@@ -43,20 +155,22 @@
             </button>
           </div>
           <div class="state">
-            <div>
+            <div v-for="i in estado">
               <i
                 class="fa fa-folder"
                 aria-hidden="true"
                 style="font-size: 28px; margin-right:5px; color: #2dbd45e7"
               ></i>
               <span>
-                Directorio
+                {{i}}
               </span>
             </div>
           </div>
           <div class="opciones">
             <div>
-              <button>
+              <button
+                onclick="document.getElementById('id01').style.display='block'"
+              >
                 <i
                   class="fa fa-folder"
                   aria-hidden="true"
@@ -64,7 +178,9 @@
                 ></i
                 >Nuevo Directorio
               </button>
-              <button>
+              <button
+                onclick="document.getElementById('id02').style.display='block'"
+              >
                 <i
                   class="fa fa-file"
                   aria-hidden="true"
@@ -76,21 +192,35 @@
           </div>
         </div>
         <div class="container-busqueda">
-          <button>
+          <button @click="recargar()">
             <i
               class="fa fa-retweet"
               aria-hidden="true"
               style="font-size: 15px; margin-right:5px; color: #333333e7"
             ></i>
           </button>
-          <button>
+          <button @click="buscar()">
             <i
               class="fa fa-search"
               aria-hidden="true"
               style="font-size: 15px; margin-right:5px; color: #333333e7"
             ></i>
           </button>
-          <input type="text" placeholder="Buscar en Directorio" />
+          <input
+            type="text"
+            v-model="formBusqueda"
+            placeholder="Buscar en este directorio"
+          />
+          <span style="color: red;">
+            {{mensajeSearch}}
+          </span>
+          <button
+            @click="pegar"
+            id="pegar"
+            style="width: 100px; display: none; "
+          >
+            Pegar
+          </button>
         </div>
       </div>
       <table class="table">
@@ -103,7 +233,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="index in datos" @dblclick="clickRow(index)">
+          <tr
+            v-for="index in datos"
+            @dblclick="clickRow(index)"
+            @contextmenu="opciones(index)"
+          >
             <th v-if="index.tipo == 'Directorio'">
               <i
                 class="fa fa-folder"
