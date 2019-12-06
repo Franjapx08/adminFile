@@ -7,8 +7,8 @@ let win;
 function createWindow() {
   // Crea la ventana del navegador.
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
       nodeIntegration: true
     }
@@ -18,7 +18,7 @@ function createWindow() {
   win.loadFile("index.html");
 
   // Abre las herramientas de desarrollo (DevTools).
-  win.webContents.openDevTools();
+ // win.webContents.openDevTools();
 
   // Emitido cuando la ventana es cerrada.
   win.on("closed", () => {

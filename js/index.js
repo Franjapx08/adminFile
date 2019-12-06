@@ -1,8 +1,3 @@
-/* Variables globales de libreria NODE JS para la administracio nde archivos */
-var fs = require("fs");
-var electron = require("electron");
-var ruta = require("path");
-var fsxtra = require("fs-extra");
 
 var App = new Vue({
   el: "#app",
@@ -10,7 +5,7 @@ var App = new Vue({
     return {
       estado: ["Raiz"],
       datos: [],
-      ruta: ["/Users/franj/Proyectos/Pruebas"],
+      ruta: ["/"],
       anterior: [],
       button: true,
       showModal: false,
@@ -126,7 +121,7 @@ var App = new Vue({
       //lleva a la carpeta raiz
       this.estado = ["Raiz"];
       this.datos = [];
-      this.ruta = ["/Users/franj/Proyectos"];
+      this.ruta = ["/"];
     },
     recargar() {
       //vuelve a recargar los datos
