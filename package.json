@@ -43,7 +43,7 @@
     "fs": "0.0.1-security"
   },
   "devDependencies": {
-    "electron": "^7.1.1",
+    "electron": "^18.3.7",
     "electron-builder": "^21.2.0"
   }
 }
